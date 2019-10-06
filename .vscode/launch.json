@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - RabbitmqProducerApplication",
+            "request": "launch",
+            "mainClass": "com.andregcaires.rabbitmqproducer.RabbitmqProducerApplication",
+            "projectName": "rabbitmq-producer"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - RabbitmqConsumerApplication",
+            "request": "launch",
+            "mainClass": "com.andregcaires.rabbitmqconsumer.RabbitmqConsumerApplication",
+            "projectName": "rabbitmq-consumer"
+        }
+    ]
+}
