@@ -1,6 +1,6 @@
 package com.andregcaires.rabbitmqproducer.producer;
 
-import com.andregcaires.rabbitmqproducer.entity.Employee;
+import com.andregcaires.rabbitmqproducer.entity.Picture;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Fanout Exchange
+ * Direct Exchange
  * In order to send a message to an exchange, one must
  * send 3 parameters on convertAndSend method:
  * the exchange name, routing key, and message.
@@ -17,19 +17,20 @@ import org.springframework.stereotype.Service;
  * so an empty string will be sent
  */
 @Service
-public class HumanResourcesProducer {
+public class PictureProducer {
 
     @Autowired
     private RabbitTemplate _rabbitTemplate;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public void sendMessage(Employee employee) {
+    public void sendMessage(Picture picture) {
 
         try {
-            System.out.println("ID sent: "+ employee.getEmployeeId());
-            var json = objectMapper.writeValueAsString(employee);
-            _rabbitTemplate.convertAndSend("x.hr", "", json);
+            System.out.println("ID sent: "+ picture.getName());
+            var json = objectMapper.writeValueAsString(picture);
+
+            _rabbitTemplate.convertAndSend("x.picture", picture.getType(), json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

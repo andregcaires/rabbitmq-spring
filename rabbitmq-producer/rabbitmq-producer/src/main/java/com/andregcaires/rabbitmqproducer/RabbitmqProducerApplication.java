@@ -2,12 +2,16 @@ package com.andregcaires.rabbitmqproducer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.andregcaires.rabbitmqproducer.entity.Employee;
+import com.andregcaires.rabbitmqproducer.entity.Picture;
 import com.andregcaires.rabbitmqproducer.producer.EmployeeJsonProducer;
 import com.andregcaires.rabbitmqproducer.producer.HelloRabbitProducer;
 import com.andregcaires.rabbitmqproducer.producer.HumanResourcesProducer;
+import com.andregcaires.rabbitmqproducer.producer.PictureProducer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +32,12 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 	@Autowired
 	private HumanResourcesProducer humanResourcesProducer;
 
+	@Autowired
+	private PictureProducer pictureProducer;
+
+	private final List<String> SOURCES = List.of("mobile","web");
+	private final List<String> TYPES = List.of("jpg", "png", "svg");
+
 	public static void main(String[] args) {
 		SpringApplication.run(RabbitmqProducerApplication.class, args);
 	}
@@ -37,14 +47,24 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 
 		helloRabbitProducer.sendHello("World! "+ Math.random());
 
-		List<Employee> list = new ArrayList<>();
-		list.add(new Employee("1", "One", LocalDate.now()));
-		list.add(new Employee("2", "Two", LocalDate.now()));
-		list.add(new Employee("3", "Three", LocalDate.now()));
+		List<Employee> listEmployees = new ArrayList<>();
+		listEmployees.add(new Employee("1", "One", LocalDate.now()));
+		listEmployees.add(new Employee("2", "Two", LocalDate.now()));
+		listEmployees.add(new Employee("3", "Three", LocalDate.now()));
 
-		//list.forEach(employeeJsonProducer::sendMessage);
+		//listEmployees.forEach(employeeJsonProducer::sendMessage);
 
-		list.forEach(humanResourcesProducer::sendMessage);
+		//listEmployees.forEach(humanResourcesProducer::sendMessage);
+
+		for (var i = 0; i < 10; i++) {
+			pictureProducer.sendMessage(new Picture("Pic"+ i, 
+				TYPES.get(i % TYPES.size()), 
+				SOURCES.get(i % SOURCES.size()),
+				ThreadLocalRandom.current().nextLong(0, 10001))
+			);
+		}
+
+
 	}
 
 }
