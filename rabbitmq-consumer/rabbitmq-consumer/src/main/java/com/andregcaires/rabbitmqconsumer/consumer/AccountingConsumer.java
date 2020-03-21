@@ -11,17 +11,17 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmployeeJsonConsumer {
+public class AccountingConsumer {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
     private static final Logger Log = LoggerFactory.getLogger(EmployeeJsonConsumer.class);
 
-    @RabbitListener(queues = "json.employee")
+    @RabbitListener(queues = "q.hr.accounting")
     public void listen(String message) {
         try {
             var emp = objectMapper.readValue(message, Employee.class);
-            Log.info("Employee is: "+ emp.toString());
+            Log.info("On accounting, employee is: "+ emp.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
