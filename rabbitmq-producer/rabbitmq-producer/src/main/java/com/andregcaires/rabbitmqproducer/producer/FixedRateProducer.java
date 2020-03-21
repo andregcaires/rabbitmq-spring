@@ -13,9 +13,7 @@ public class FixedRateProducer {
 
     private int i = 0;
 
-    //private Logger log = LoggerFactory.getLogger(FixedRateProducer.class);
-
-    @Scheduled(fixedRate = 500)
+    //@Scheduled(fixedRate = 500)
     public void sendMessage() {
 
         i++;
