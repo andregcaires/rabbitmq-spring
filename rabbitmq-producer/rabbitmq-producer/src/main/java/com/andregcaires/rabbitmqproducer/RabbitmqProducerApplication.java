@@ -12,6 +12,7 @@ import com.andregcaires.rabbitmqproducer.producer.EmployeeJsonProducer;
 import com.andregcaires.rabbitmqproducer.producer.HelloRabbitProducer;
 import com.andregcaires.rabbitmqproducer.producer.HumanResourcesProducer;
 import com.andregcaires.rabbitmqproducer.producer.PictureProducer;
+import com.andregcaires.rabbitmqproducer.producer.PictureTopicProducer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -35,6 +36,9 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 	@Autowired
 	private PictureProducer pictureProducer;
 
+	@Autowired
+	private PictureTopicProducer pictureTopicProducer;
+
 	private final List<String> SOURCES = List.of("mobile","web");
 	private final List<String> TYPES = List.of("jpg", "png", "svg");
 
@@ -55,15 +59,22 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 		//listEmployees.forEach(employeeJsonProducer::sendMessage);
 
 		//listEmployees.forEach(humanResourcesProducer::sendMessage);
-
+		/*
 		for (var i = 0; i < 10; i++) {
 			pictureProducer.sendMessage(new Picture("Pic"+ i, 
 				TYPES.get(i % TYPES.size()), 
 				SOURCES.get(i % SOURCES.size()),
 				ThreadLocalRandom.current().nextLong(0, 10001))
 			);
+		}*/
+		
+		for (var i = 0; i < 10; i++) {
+			pictureTopicProducer.sendMessage(new Picture("PicTopic"+ i, 
+				TYPES.get(i % TYPES.size()), 
+				SOURCES.get(i % SOURCES.size()),
+				ThreadLocalRandom.current().nextLong(0, 10001))
+			);
 		}
-
 
 	}
 

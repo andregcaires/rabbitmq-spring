@@ -8,7 +8,7 @@ public class Picture {
     private long size;
 
     public String toString() {
-        return "name: " + name + "type: " + type + "source: " + source + "size: " + size;
+        return "\nname: " + name + " | type: " + type + " | source: " + source + " | size: " + size;
     }
 
     public Picture() {

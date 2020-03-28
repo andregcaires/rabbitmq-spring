@@ -11,19 +11,19 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PicturVectorConsumer {
+public class PictureTopicVectorConsumer {
 
-    private final Logger Log = LoggerFactory.getLogger(PicturVectorConsumer.class);
+    private final Logger Log = LoggerFactory.getLogger(PictureVectorConsumer.class);
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @RabbitListener(queues = "q.picture.vector")
+    @RabbitListener(queues = "q.picturetopic.vector")
     public void listen(String message) {
 
         try {
             var picture = objectMapper.readValue(message, Picture.class);
 
-            Log.info("On vector: {}", picture.toString());
+            Log.info("On topic vector: {}", picture.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
