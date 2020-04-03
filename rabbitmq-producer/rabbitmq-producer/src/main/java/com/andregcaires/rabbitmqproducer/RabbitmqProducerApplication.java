@@ -11,6 +11,7 @@ import com.andregcaires.rabbitmqproducer.entity.Picture;
 import com.andregcaires.rabbitmqproducer.producer.EmployeeJsonProducer;
 import com.andregcaires.rabbitmqproducer.producer.HelloRabbitProducer;
 import com.andregcaires.rabbitmqproducer.producer.HumanResourcesProducer;
+import com.andregcaires.rabbitmqproducer.producer.MyPictureProducer;
 import com.andregcaires.rabbitmqproducer.producer.PictureProducer;
 import com.andregcaires.rabbitmqproducer.producer.PictureTopicProducer;
 
@@ -38,6 +39,10 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 
 	@Autowired
 	private PictureTopicProducer pictureTopicProducer;
+
+	
+	@Autowired
+	private MyPictureProducer myPictureProducer;
 
 	private final List<String> SOURCES = List.of("mobile","web");
 	private final List<String> TYPES = List.of("jpg", "png", "svg");
@@ -68,11 +73,20 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 			);
 		}*/
 		
+		/*
 		for (var i = 0; i < 10; i++) {
 			pictureTopicProducer.sendMessage(new Picture("PicTopic"+ i, 
 				TYPES.get(i % TYPES.size()), 
 				SOURCES.get(i % SOURCES.size()),
 				ThreadLocalRandom.current().nextLong(0, 10001))
+			);
+		}*/
+
+		for (var i = 0; i < 1; i++) {
+			myPictureProducer.sendMessage(new Picture("PicTopic"+ i, 
+				TYPES.get(i % TYPES.size()), 
+				SOURCES.get(i % SOURCES.size()),
+				ThreadLocalRandom.current().nextLong(9000, 10001))
 			);
 		}
 
